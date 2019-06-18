@@ -492,9 +492,6 @@ class VolterraPrintRestorePlugin(octoprint.plugin.StartupPlugin,
         """Allow configuration of injected OctoPrint UI template"""
         return [dict(type="settings", custom_bindings=True)]
 
-    def get_settings_version(self):
-        return 2
-
     def get_settings_defaults(self):
         """Define plugin settngs and their default values"""
         return dict(
@@ -503,14 +500,6 @@ class VolterraPrintRestorePlugin(octoprint.plugin.StartupPlugin,
             interval=1,
             enableBabystep=None
         )
-
-    def on_settings_migrate(self, target, current):
-        if target == 2:
-            self._settings.set_boolean(["enabled"], self._settings.get_boolean(["enabled"]))
-            self._settings.set_boolean(["autoRestore"], self._settings.get_boolean(["autoRestore"]))
-            self._settings.set_int(["interval"], self._settings.get_int(["interval"]))
-            self._settings.set_boolean(["enableBabystep"], self._settings.get_boolean(["enableBabystep"]))
-            self._settings.save()
 
     def on_settings_save(self, data):
         """React to changes in plugin settings"""

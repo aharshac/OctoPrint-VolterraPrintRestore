@@ -144,13 +144,14 @@ class VolterraPrintRestorePlugin(octoprint.plugin.StartupPlugin,
                 "path": file["job"]["file"]["path"],
                 "tool0Target": temps["tool0"]["target"],
                 "bedTarget": temps["bed"]["target"],
-                "chamberTarget": temps["chamber"]["target"],
                 "position": self.state_position,
                 "babystep": self.state_babystep if self.enableBabystep else 0
                 }
-        if "tool1" in temps.keys():
-            if temps["tool1"]["target"] is not None:
-                data["tool1Target"] = temps["tool1"]["target"]
+        if "tool1" in temps.keys() and temps["tool1"]["target"] is not None:
+            data["tool1Target"] = temps["tool1"]["target"]
+        if "chamber" in temps.keys() and temps["chamber"]["target"] is not None:
+            data["chamberTarget"] = temps["chamber"]["target"]
+
         self.flag_restore_file_write_in_progress = True
         with open(self.__TEMP_RESTORE_FILE, 'w') as restoreFile:
             json.dump(data, restoreFile)

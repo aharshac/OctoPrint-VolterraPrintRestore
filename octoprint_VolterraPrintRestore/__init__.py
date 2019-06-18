@@ -56,12 +56,12 @@ class RepeatedTimer(object):
             self.is_running = False
 
 
-class Julia2018PrintRestore(octoprint.plugin.StartupPlugin,
-                            octoprint.plugin.EventHandlerPlugin,
-                            octoprint.plugin.SettingsPlugin,
-                            octoprint.plugin.AssetPlugin,
-                            octoprint.plugin.TemplatePlugin,
-                            octoprint.plugin.BlueprintPlugin):
+class VolterraPrintRestorePlugin(octoprint.plugin.StartupPlugin,
+                                 octoprint.plugin.EventHandlerPlugin,
+                                 octoprint.plugin.SettingsPlugin,
+                                 octoprint.plugin.AssetPlugin,
+                                 octoprint.plugin.TemplatePlugin,
+                                 octoprint.plugin.BlueprintPlugin):
     """OctoPrint print restore plugin for Fracktal Works 3D printers."""
 
     # region "Plugin settings"
@@ -480,7 +480,7 @@ class Julia2018PrintRestore(octoprint.plugin.StartupPlugin,
     def get_assets(self):
         """Define the static assets the plugin offers."""
         return dict(
-            js=["js/julia_print_restore.js"],
+            js=["js/volterra_print_restore.js"],
         )
 
     def get_template_configs(self):
@@ -572,28 +572,28 @@ class Julia2018PrintRestore(octoprint.plugin.StartupPlugin,
     def get_update_information(self):
         """Plugin configuration for software update."""
         return dict(
-            Julia2018PrintRestore=dict(
-                displayName="Julia Print Restore",
+            VolterraPrintRestore=dict(
+                displayName="Volterra Print Restore",
                 displayVersion=self._plugin_version,
                 # version check: github repository
                 type="github_release",
                 user="FracktalWorks",
-                repo="Julia2018PrintRestore",
+                repo="OctoPrint-VolterraPrintRestore",
                 current=self._plugin_version,
                 # update method: pip
-                pip="https://github.com/FracktalWorks/Julia2018PrintRestore/archive/{target_version}.zip"
+                pip="https://github.com/FracktalWorks/OctoPrint-VolterraPrintRestore/archive/{target_version}.zip"
             )
         )
     # endregion
 
 
-__plugin_name__ = "Julia Print Restore"
+__plugin_name__ = "Volterra Print Restore"
 __plugin_version__ = __version__
 
 
 def __plugin_load__():
     global __plugin_implementation__
-    __plugin_implementation__ = Julia2018PrintRestore()
+    __plugin_implementation__ = VolterraPrintRestorePlugin()
 
     global __plugin_hooks__
     __plugin_hooks__ = {

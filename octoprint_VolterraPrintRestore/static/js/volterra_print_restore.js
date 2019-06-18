@@ -1,5 +1,5 @@
 $(function() {
-    function JuliaPrintRestoreViewModel(parameters) {
+    function VolterraPrintRestoreViewModel(parameters) {
         var self = this;
 
         self.VM_settings = parameters[0];
@@ -7,7 +7,7 @@ $(function() {
         // self.saveConfig = function() {
         //     var data = {
         //         plugins: {
-        //             Julia2018PrintRestore: {
+        //             VolterraPrintRestore: {
 
         //             }
         //         }
@@ -16,7 +16,7 @@ $(function() {
         // };
 
         self.onDataUpdaterPluginMessage = function(plugin, data) {
-            if (plugin !== "Julia2018PrintRestore") {
+            if (plugin !== "VolterraPrintRestore") {
                 return;
             }
             console.log(data);
@@ -27,17 +27,17 @@ $(function() {
         };
 
         self.onBeforeBinding = function() {
-            console.log('Binding JuliaPrintRestoreViewModel')
+            console.log('Binding VolterraPrintRestoreViewModel')
 
-            self.Config = self.VM_settings.settings.plugins.Julia2018PrintRestore;
+            self.Config = self.VM_settings.settings.plugins.VolterraPrintRestore;
 
             console.log(self.Config);
         };
     }
 
     OCTOPRINT_VIEWMODELS.push([
-        JuliaPrintRestoreViewModel,
+        VolterraPrintRestoreViewModel,
         ["settingsViewModel"],
-        ["#settings_julia_print_restore"]
+        ["#settings_volterra_print_restore"]
     ]);
 });

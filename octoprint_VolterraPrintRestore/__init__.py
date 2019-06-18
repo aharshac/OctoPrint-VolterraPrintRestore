@@ -144,6 +144,7 @@ class VolterraPrintRestorePlugin(octoprint.plugin.StartupPlugin,
                 "path": file["job"]["file"]["path"],
                 "tool0Target": temps["tool0"]["target"],
                 "bedTarget": temps["bed"]["target"],
+                "chamberTarget": temps["chamber"]["target"],
                 "position": self.state_position,
                 "babystep": self.state_babystep if self.enableBabystep else 0
                 }
@@ -271,20 +272,24 @@ class VolterraPrintRestorePlugin(octoprint.plugin.StartupPlugin,
             if data["fileName"] != "None":   # file name is not none
                 self._printer.commands("M117 RESTORE_STARTED")
 
-                if data["bedTarget"] > 0:
+                if "bedTarget" in data.keys() and data["bedTarget"] > 0:
+                    self._printer.commands("M140 S{}".format(data["bedTarget"]))
+                if "tool0Target" in data.keys() and data["tool0Target"] > 0:
+                    self._printer.commands("M104 T0 S{}".format(data["tool0Target"]))
+                if "tool1Target" in data.keys() and data["tool1Target"] > 0:
+                    self._printer.commands("M104 T1 S{}".format(data["tool1Target"]))
+                if "chamberTarget" in data.keys() and data["chamberTarget"] > 0:
+                    self._printer.commands("M141 T1 S{}".format(data["chamberTarget"]))
+
+                if "bedTarget" in data.keys() and data["bedTarget"] > 0:
                     self._printer.commands("M190 S{}".format(data["bedTarget"]))
-                if "tool0Target" in data.keys():
-                    if data["tool0Target"] > 0:
-                        self._printer.commands("M104 T0 S{}".format(data["tool0Target"]))
-                if "tool1Target" in data.keys():
-                    if data["tool1Target"] > 0:
-                        self._printer.commands("M104 T1 S{}".format(data["tool1Target"]))
-                if "tool0Target" in data.keys():
-                    if data["tool0Target"] > 0:
-                        self._printer.commands("M109 T0 S{}".format(data["tool0Target"]))
-                if "tool1Target" in data.keys():
-                    if data["tool1Target"] > 0:
-                        self._printer.commands("M109 T1 S{}".format(data["tool1Target"]))
+                if "tool0Target" in data.keys() and data["tool0Target"] > 0:
+                    self._printer.commands("M109 T0 S{}".format(data["tool0Target"]))
+                if "tool1Target" in data.keys() and data["tool1Target"] > 0:
+                    self._printer.commands("M109 T1 S{}".format(data["tool1Target"]))
+                if "chamberTarget" in data.keys() and data["chamberTarget"] > 0:
+                    self._printer.commands("M191 T1 S{}".format(data["chamberTarget"]))
+
                 self._printer.commands("T0")
                 self._printer.home("z")
                 self._printer.home(["x", "y"])
